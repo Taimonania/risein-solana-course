@@ -33,11 +33,15 @@ pub fn process_instruction(
     let mut counter_account = CounterAccount::try_from_slice(&account.data.borrow())?;
 
     match instruction {
-        CounterInstructions::Increment => {
-            counter_account.counter += 1;
+        CounterInstructions::Increment(args) => {
+            counter_account.counter += args.value;
         }
-        CounterInstructions::Decrement => {
-            counter_account.counter -= 1;
+        CounterInstructions::Decrement(args) => {
+            if args.value > counter_account.counter {
+                counter_account.counter = 0;
+            } else {
+                counter_account.counter -= args.value;
+            }
         }
         CounterInstructions::Reset => {
             counter_account.counter = 0;
