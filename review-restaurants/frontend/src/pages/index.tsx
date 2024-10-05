@@ -28,7 +28,7 @@ export default function Home() {
   }, []);
 
   const handleSubmit = () => {
-    const review = new Review(title, rating, description);
+    const review = new Review(title, rating, description, "At home");
     handleTransactionSubmit(review);
   };
 
